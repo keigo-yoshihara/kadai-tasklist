@@ -6,6 +6,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    @task = Task.new(correct_user)
     @task = Task.find(params[:id])
   end
 
@@ -27,10 +28,12 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @task = Task.new(correct_user)
     @task = Task.find(params[:id])
   end
 
   def update
+    @task = Task.new(correct_user)
     @task = Task.find(params[:id])
 
     if @task.update(task_params)
@@ -43,6 +46,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    @task = Task.new(correct_user)
     @task = Task.find(params[:id])
     @task.destroy
 
