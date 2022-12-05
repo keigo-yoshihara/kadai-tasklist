@@ -1,12 +1,12 @@
 class TasksController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  before_action :correct_user, only: [:show, :edit, :update, :destroy]
   
   def index
     @pagy, @tasks = pagy(current_user.tasks.order(id: :desc))
   end
 
   def show
-    @task = Task.new(correct_user)
     @task = Task.find(params[:id])
   end
 
@@ -28,12 +28,10 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.new(correct_user)
     @task = Task.find(params[:id])
   end
 
   def update
-    @task = Task.new(correct_user)
     @task = Task.find(params[:id])
 
     if @task.update(task_params)
@@ -46,7 +44,6 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.new(correct_user)
     @task = Task.find(params[:id])
     @task.destroy
 
